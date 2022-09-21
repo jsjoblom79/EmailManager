@@ -1,0 +1,43 @@
+﻿<Window x:Class="EmailManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EmailManager"
+        xmlns:Main="clr-namespace:EmailManager.Main"
+        xmlns:Schedule="clr-namespace:EmailManager.Schedule"
+        xmlns:Recipient="clr-namespace:EmailManager.Recipient"
+        xmlns:Campaign="clr-namespace:EmailManager.Campaign"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        local:ViewModelLocator.AutoWireViewModel="True">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type Schedule:ScheduleViewModel}">
+            <Schedule:ScheduleView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type Recipient:RecipientsViewModel}">
+            <Recipient:RecipientsView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type Campaign:CampaignViewModel}">
+            <Campaign:CampaignView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type Main:MainMenuViewModel}">
+            <Main:MainMenuView/>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="File" Command="{Binding Navigate}" CommandParameter="main"/>
+            <MenuItem Header="Schedule" Command="{Binding Navigate}" CommandParameter="schedule"/>
+            <MenuItem Header="Campaign" Command="{Binding Navigate}" CommandParameter="campaign"/>
+            <MenuItem Header="Recipients" Command="{Binding Navigate}" CommandParameter="recipients"/>
+        </Menu>
+        <ContentControl Grid.Row="1"
+                     Content="{Binding CurrentView}"/>
+    </Grid>
+</Window>

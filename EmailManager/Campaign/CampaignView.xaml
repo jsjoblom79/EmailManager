@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="EmailManager.Campaign.CampaignView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EmailManager.Campaign"
+             xmlns:root="clr-namespace:EmailManager"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             root:ViewModelLocator.AutoWireViewModel="True">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer>
+            <Grid Grid.Column="0" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Campaign Name:" HorizontalContentAlignment="Right"/>
+                <TextBox Grid.Column="1" Text="{Binding CampaignName}"/>
+                <Label Grid.Row="1" Content="Campaign Content:" HorizontalContentAlignment="Right"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Content}"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Visible"/>
+                <Label Grid.Row="2" Content="Reply To:" HorizontalContentAlignment="Right"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding To}"/>
+                <Label Grid.Row="3" Content="From Address:" HorizontalContentAlignment="Right"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding From}"/>
+                <Label Grid.Row="4" Content="Subject:" HorizontalContentAlignment="Right"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Subject}"/>
+                <Label Grid.Row="5" Content="Importance:" HorizontalContentAlignment="Right"/>
+                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Importance}"/>
+                <Label Grid.Row="6" Content="Sensitivity:" HorizontalContentAlignment="Right"/>
+                <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Sensitivity}"/>
+                <Label Grid.Row="7" Content="Bypass Email Send:" HorizontalContentAlignment="Right"/>
+                <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Bypass}"/>
+
+                <Button Grid.Row="8" Grid.Column="1" Content="Create"
+                    Command="{Binding CreateCampaign}"
+                    CommandParameter="{Binding CurrentCampaign}"/>
+
+            </Grid>
+        </ScrollViewer>
+        <ScrollViewer Grid.Column="1">
+            <TextBlock Text="{Binding CurrentCampaign}"/>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
