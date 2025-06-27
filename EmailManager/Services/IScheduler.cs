@@ -10,6 +10,6 @@ namespace EmailManager.Services
     {
         void CreateSchedule(Models.Schedule schedule, string path);
         void CreateCampaign(Models.Campaign campaign, string path);
-        void GetRecipients(string path);
+        bool GetRecipients(string path);
     }
 }

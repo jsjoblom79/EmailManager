@@ -50,7 +50,11 @@ namespace EmailManager.Recipient
         private async void OnProcessFile(string path)
         {
             Scheduler scheduler = new Scheduler();
-            await Task.Run(() => scheduler.GetRecipients(path));
+            if(scheduler.GetRecipients(path))
+            {
+                MessageBox.Show("Processing Complete.");
+            }
+
         }
 
     }

@@ -45,11 +45,11 @@
                 <Label Grid.Row="4" Content="Subject:" HorizontalContentAlignment="Right"/>
                 <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Subject}"/>
                 <Label Grid.Row="5" Content="Importance:" HorizontalContentAlignment="Right"/>
-                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Importance}"/>
+                <ComboBox ItemsSource="{Binding CampaignImportance}" SelectedItem="{Binding Importance}" Grid.Row="5" Grid.Column="1" />
                 <Label Grid.Row="6" Content="Sensitivity:" HorizontalContentAlignment="Right"/>
                 <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Sensitivity}"/>
                 <Label Grid.Row="7" Content="Bypass Email Send:" HorizontalContentAlignment="Right"/>
-                <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Bypass}"/>
+                <ComboBox ItemsSource="{Binding ByPassEmail}" Grid.Row="7" Grid.Column="1" SelectedItem="{Binding Bypass}"/>
 
                 <Button Grid.Row="8" Grid.Column="1" Content="Create"
                     Command="{Binding CreateCampaign}"
@@ -57,7 +57,7 @@
 
             </Grid>
         </ScrollViewer>
-        <ScrollViewer Grid.Column="1">
+        <ScrollViewer Grid.Column="1" Width="Auto">
             <TextBlock Text="{Binding CurrentCampaign}"/>
         </ScrollViewer>
     </Grid>

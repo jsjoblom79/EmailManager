@@ -1,6 +1,7 @@
 ﻿using EmailManager.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,10 +11,14 @@ namespace EmailManager.Campaign
 {
     public class CampaignViewModel : BindableBase
     {
+        
         public CampaignViewModel()
         {
             CurrentCampaign = new Models.Campaign();
             CreateCampaign = new RelayCommand<Models.Campaign>(OnCreateCampaign);
+            CampaignImportance = new ObservableCollection<string>(new string[] { "High", "Normal" });
+            ByPassEmail = new ObservableCollection<string>(new string[] { "Y", "N" });
+            Sensitivity = "Normal";
         }
 
 
@@ -23,7 +28,7 @@ namespace EmailManager.Campaign
             string path = string.Empty;
             using (SaveFileDialog dialog = new SaveFileDialog())
             {
-                dialog.InitialDirectory = @"\\nmslfiles\SourceCode\POB\";
+                dialog.InitialDirectory = @"\\nmeaf.org\Files\SourceCode\";
                 dialog.Filter = "All Files (*.*)|*.*";
 
                 if (dialog.ShowDialog() == DialogResult.OK)
@@ -31,7 +36,7 @@ namespace EmailManager.Campaign
                     path = dialog.FileName;
                 }
             }
-
+            
             Scheduler scheduler = new Scheduler();
             scheduler.CreateCampaign(campaign, path);
         }
@@ -77,7 +82,7 @@ namespace EmailManager.Campaign
         {
             get { return _sensitivity; }
             set { SetProperty(ref _sensitivity, value);
-                CurrentCampaign.Sensitivity = value;
+                CurrentCampaign.Sensitivity = "Normal";
                 UpdateCamp();
             }
         }
@@ -135,6 +140,24 @@ namespace EmailManager.Campaign
                 UpdateCamp();
             }
         }
+
+        private ObservableCollection<string> _campaignImportance;
+
+        public ObservableCollection<string> CampaignImportance
+        {
+            get { return _campaignImportance; }
+            set { SetProperty(ref _campaignImportance, value); }
+        }
+
+
+        private ObservableCollection<string> _byPassEmail;
+
+        public ObservableCollection<string> ByPassEmail
+        {
+            get { return _byPassEmail; }
+            set { SetProperty(ref _byPassEmail, value); }
+        }
+
 
     }
 }

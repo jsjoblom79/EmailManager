@@ -17,15 +17,15 @@
         <StackPanel Orientation="Vertical"
                     VerticalAlignment="Center" HorizontalAlignment="Left"
                     Grid.Column="0">
-            <TextBlock Text="Schedule Criteria"/>
+            <TextBlock Text="Schedule Criteria" HorizontalAlignment="Center" FontSize="16" FontWeight="SemiBold"/>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" MinHeight="30"/>
+                    <RowDefinition Height="Auto" MinHeight="30"/>
+                    <RowDefinition Height="Auto" MinHeight="30"/>
+                    <RowDefinition Height="Auto" MinHeight="30"/>
+                    <RowDefinition Height="Auto" MinHeight="30"/>
+                    <RowDefinition Height="Auto" MinHeight="30"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -33,25 +33,25 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Content="Schedule Name:" Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Right"/>
-                <TextBox Text="{Binding ScheduleName}"  Width="Auto" Grid.Row="0" Grid.Column="1"/>
+                <TextBox Text="{Binding ScheduleName}"  Width="Auto" Grid.Row="0" Grid.Column="1" Height="25"/>
 
                 <Label Content="Schedule Start Date:" Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Right"/>
                 <toolkit:DateTimePicker TimeFormat="ShortDate" Text="{Binding ScheduleStartDate}" Width="250" Grid.Row="1" Grid.Column="1"
                                         TimeFormatString="MM/dd/yyyy"
-                                        Format="ShortDate"/>
+                                        Format="ShortDate" Height="25"/>
 
                 <Label Content="Schedule Start Time:" Grid.Row="2" Grid.Column="0" HorizontalContentAlignment="Right"/>
                 <toolkit:DateTimePicker TimeFormat="Custom" Text="{Binding ScheduleStartTime}"  Width="Auto" Grid.Row="2" Grid.Column="1"
                                         TimeFormatString="HH:mm:ss"
                                         Format="Custom"
-                                        FormatString="HH:mm:ss"/>
+                                        FormatString="HH:mm:ss" Height="25"/>
 
                 <Label Content="Frequency:" Grid.Row="3" Grid.Column="0" HorizontalContentAlignment="Right"/>
                 <ComboBox x:Name="Freq" Grid.Row="3"  Width="Auto" Grid.Column="1"
                           ItemsSource="{Binding Frequencies}" DisplayMemberPath="Name"
                           SelectedValuePath="Name"
                           SelectedValue="{Binding Frequency}"
-                          Text="{Binding ElementName=Freq, Path=Name}">
+                          Text="{Binding ElementName=Freq, Path=Name}" Height="25">
                    
                 </ComboBox>
 
@@ -60,18 +60,18 @@
                                         TimeFormat="Custom"
                                         TimeFormatString="MM/dd/yyyy"
                                         Format="Custom"
-                                        FormatString="MM/dd/yyyy"/>
+                                        FormatString="MM/dd/yyyy" Height="25"/>
                 <Label Content="Next run Date:" Grid.Row="5" Grid.Column="0" HorizontalContentAlignment="Right"/>
                 <toolkit:DateTimePicker Text="{Binding NextRun}" Grid.Row="5"  Width="Auto" Grid.Column="1"
                                         TimeFormat="Custom"
                                         TimeFormatString="MM/dd/yyyy HH:mm:ss"
                                         Format="Custom"
-                                        FormatString="MM/dd/yyyy HH:mm:ss"/>
+                                        FormatString="MM/dd/yyyy HH:mm:ss" Height="25"/>
 
             </Grid>
             <Button Content="Create Schedule"
                     Command="{Binding CreateSchedule}"
-                    CommandParameter="{Binding CurrentSchedule}"/>
+                    CommandParameter="{Binding CurrentSchedule}" Height="25" Width="200"/>
         </StackPanel>
         <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
             <TextBlock Text="{Binding CurrentSchedule}"/>

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Excel = Microsoft.Office.Interop.Excel;
 using EmailManager.Models;
+using System.Windows.Forms;
 
 namespace EmailManager.Services
 {
@@ -26,7 +27,7 @@ namespace EmailManager.Services
             File.WriteAllText(path, schedule.ToString());
         }
 
-        public void GetRecipients(string path)
+        public bool GetRecipients(string path)
         {
             Excel.Application xlApp = new Excel.Application();
             Excel.Workbook xlWrkBk = xlApp.Workbooks.Open(path);
@@ -41,30 +42,48 @@ namespace EmailManager.Services
                 {
                     FirstName = ((string)xlWrkSht.Cells[row, "B"].Text).Clean(),
                     LastName = ((string)xlWrkSht.Cells[row, "C"].Text).Clean(),
-                    EmailAddress = ((string)xlWrkSht.Cells[row, "D"].Text).Clean()
+                    EmailAddress = ((string)xlWrkSht.Cells[row, "D"].Text).IsValidEmail()
                 };
                 list.Add(recipient);
             }
 
             xlWrkBk.Close();
             xlApp.Quit();
-            SplitRecipientList(list);
+           return SplitRecipientList(list.Where(r => r.EmailAddress != null).ToList());
         }
 
-        private void SplitRecipientList(List<Models.Recipient> recipients)
+        private bool SplitRecipientList(List<Models.Recipient> recipients)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("USE CampaignManager \n GO");
             sb.AppendLine("INSERT INTO [dbo].[Recipients] \n VALUES");
-
-            int totalGroupSize = recipients.Count / 3;
+            int totalGroupSize = 0;
+            if(recipients.Count > 3000)
+            {
+                totalGroupSize = recipients.Count / 3;
+            }
+            else
+            {
+                totalGroupSize = recipients.Count;
+            }
+            
             var partitions = recipients.Partition(totalGroupSize);
             int counter = 1;
+            string folderPath = string.Empty;
+
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.InitialDirectory = @"\\nmslfiles\SourceCode\POB\";
+            sfd.FileName = "";
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                folderPath = Path.GetDirectoryName(sfd.FileName);
+            }
             foreach (var part in partitions)
             {
-                File.WriteAllText($@"\\nmslfiles\SourceCode\POB\24415\{counter}_Recipient_sql.sql", WritePartitionList(part));
+                File.WriteAllText($@"{folderPath}\{counter}_Recipient.sql", WritePartitionList(part));
                 counter++;
             }
+            return true;
         }
 
         private string WritePartitionList(List<Models.Recipient> lists)
